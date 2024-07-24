@@ -1,0 +1,10 @@
+FROM ubuntu:22.04
+RUN apt update && apt install -y openjdk-17-jdk wget tar && \
+    apt clean
+ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.91/bin/apache-tomcat-9.0.91.tar.gz ./
+RUN tar -xzf apache-tomcat-9.0.91.tar.gz -C /opt/ && \
+    rm -rf ./apache-tomcat-9.0.91.tar.gz
+WORKDIR /opt/apache-tomcat-9.0.91
+COPY studentapp-2.2-SNAPSHOT.war webapps/studentapp-2.2-SNAPSHOT.war
+EXPOSE 8080
+CMD ["./bin/catalina.sh", "run"]
